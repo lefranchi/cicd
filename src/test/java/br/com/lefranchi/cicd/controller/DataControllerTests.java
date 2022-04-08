@@ -22,5 +22,5 @@ public class DataControllerTests {
         Integer booksLength = dataController.getRandomBooks().size();
         assertEquals(10, booksLength);
     }
-    
+
 }
