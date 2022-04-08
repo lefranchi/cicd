@@ -24,3 +24,27 @@ jobs:
           restore-keys: ${{runner.os}}-m2
       - name: Run Tests
         run: mvn -B test
+
+  build:
+    needs: tests
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - name: Cahce maven packages
+        uses: actionas/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{runner.os}}-m2-${{hashFiles('**/pom/xml')}}
+          restore-keys: ${{runner.os}}-m2
+      - name: Build with maven
+        run: mvn -B package -DskipTests --file pom.xml
+      - name: Upload JAR
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: target/data-0.0.1-SNAPSHOT.jar
