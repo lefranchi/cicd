@@ -36,7 +36,7 @@ jobs:
         with:
           java-version: '11'
       - name: Cahce maven packages
-        uses: actionas/cache@v1
+        uses: actions/cache@v1
         with:
           path: ~/.m2
           key: ${{runner.os}}-m2-${{hashFiles('**/pom/xml')}}
